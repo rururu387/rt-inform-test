@@ -1,0 +1,59 @@
+plugins {
+	id "application"
+	id "java"
+	id "idea"
+	id "groovy"
+}
+
+application {
+	mainClass = "com.goose.Main"
+}
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+sourceSets {
+	main {
+		java {
+			srcDirs = ["src/main/java"]
+		}
+//		groovy {
+//			srcDirs = ["src/main/groovy"]
+//		}
+	}
+	test {
+		java {
+			srcDirs = ["src/test/java"]
+		}
+	}
+}
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+}
+
+project.group = ext.projectGroup
+project.version = ext.projectVersion
+
+dependencies {
+	implementation "org.apache.groovy:groovy-all:${groovyVersion}"
+	compileOnly "jakarta.annotation:jakarta.annotation-api:${jakartaAnnotationApiVersion}"
+	testImplementation(platform("org.junit:junit-bom:${junitVersion}"))
+	testCompileOnly "org.junit.jupiter:junit-jupiter-params"
+	testImplementation "org.junit.jupiter:junit-jupiter"
+	testRuntimeOnly('org.junit.platform:junit-platform-launcher')
+}
+
+test {
+	useJUnitPlatform()
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
+	filter {
+		includeTestsMatching "*Test.*"
+	}
+}

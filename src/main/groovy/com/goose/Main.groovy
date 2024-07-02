@@ -1,3 +1,8 @@
+package com.goose
+
+import com.goose.service.GroovyCounterService
+import com.goose.service.JavaCounterService
+
 class Main {
     static void main(String[] args) {
         // Работает и в groovy тоже =)
